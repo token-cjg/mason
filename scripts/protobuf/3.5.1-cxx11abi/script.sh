@@ -3,7 +3,7 @@
 LIB_VERSION=3.5.1
 
 MASON_NAME=protobuf
-MASON_VERSION=${LIB_VERSION}
+MASON_VERSION=${LIB_VERSION}-cxx11abi
 
 if [ "${MASON_PLATFORM}" == "ios" ]; then
     MASON_LIB_FILE=lib-isim-i386/libprotobuf.a
@@ -28,7 +28,7 @@ function mason_load_source {
 function mason_compile {
     # note CFLAGS overrides defaults (-O2 -g -DNDEBUG) so we need to add optimization flags back
     export CFLAGS="${CFLAGS} -O3 -DNDEBUG"
-    export CXXFLAGS="${CXXFLAGS} -O3 -DNDEBUG"
+    export CXXFLAGS="${CXXFLAGS} -O3 -DNDEBUG -D_GLIBCXX_USE_CXX11_ABI=1"
 
     if [ "${MASON_PLATFORM}" == "android" ]; then
         export LDFLAGS="${LDFLAGS} -llog"
