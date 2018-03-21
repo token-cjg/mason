@@ -1,5 +1,11 @@
 version: 2
 
+step-library:
+  - &build-and-test
+    run:
+      name: Build and test
+      command: ./test/all.sh;
+
 jobs:
   build-osx:
     macos:
@@ -15,12 +21,6 @@ jobs:
       - checkout
       - run: "echo 'hello linux'"
       - *build-and-test
-
-step-library:
-  - &build-and-test
-    run:
-      name: Build and test
-      command: ./test/all.sh;
 
 workflows:
   version: 2
