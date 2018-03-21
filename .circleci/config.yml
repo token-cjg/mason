@@ -1,5 +1,12 @@
 version: 2
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build-osx
+      - build-linux
+
 jobs:
   build-osx:
     macos:
@@ -7,16 +14,16 @@ jobs:
     steps:
       - checkout
       - run: "echo 'hello osx'"
+      - *build-and-test
 
   build-linux:
     machine: true
     steps:
       - checkout
       - run: "echo 'hello linux'"
+      - *build-and-test
 
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      #- build-osx
-      - build-linux
+&build-and-test
+      run:
+        name: Build and test
+        command: ./test/all.sh;
