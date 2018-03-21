@@ -7,6 +7,13 @@ MASON_PKGCONFIG_FILE=lib/pkgconfig/expat.pc
 
 . ${MASON_DIR}/mason.sh
 
+function mason_prepare_compile {
+    PKGCONFIG_VERSION=0.29.1
+    ${MASON_DIR}/mason install pkgconfig ${PKGCONFIG_VERSION}
+    MASON_PKGCONFIG_PATH=$(${MASON_DIR}/mason prefix pkgconfig ${PKGCONFIG_VERSION})
+    export PATH=${MASON_PKGCONFIG_PATH}:$PATH
+}
+
 function mason_load_source {
     mason_download \
         https://downloads.sourceforge.net/project/expat/expat/${MASON_VERSION}/expat-${MASON_VERSION}.tar.bz2 \
