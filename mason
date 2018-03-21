@@ -72,14 +72,20 @@ RUBY
       }
     }"
 
-    curl -s -X POST https://api.travis-ci.org/repo/mapbox%2Fmason/requests \
-        -H "Content-Type: application/json" \
-        -H "Accept: application/json" \
-        -H "Travis-API-Version: 3" \
-        -H "Authorization: token ${MASON_TRAVIS_TOKEN}" \
-        -d "$body"
 
-    echo "Now go to https://travis-ci.org/mapbox/mason/builds to view build status"
+    # ensure this works:
+    # curl https://circleci.com/api/v1.1/me?circle-token=${CIRCLE_API_TOKEN}
+    CIRCLE_VCS_TYPE="github"
+    CIRCLE_USERNAME="mapbox"
+    CIRCLE_PROJECT="mason"
+    CIRCLE_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    CIRCLE_JOB="build-linux"
+
+    curl -s -X POST \
+      -d build_parameters[CIRCLE_JOB]=${CIRCLE_JOB} \
+      -u ${CIRCLE_API_TOKEN}: \
+      -H "Accept: application/json" \
+      https://circleci.com/api/v1.1/${CIRCLE_VCS_TYPE}/${CIRCLE_USERNAME}/${CIRCLE_PROJECT}/tree/${CIRCLE_BRANCH}
 
     exit
 fi
