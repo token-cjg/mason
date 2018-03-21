@@ -23,7 +23,8 @@ jobs:
       - run: "echo 'hello linux'"
       - *build-and-test
 
-&build-and-test
-      run:
-        name: Build and test
-        command: ./test/all.sh;
+step-library:
+  - &build-and-test
+    run:
+      name: Build and test
+      command: ./test/all.sh;
