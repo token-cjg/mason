@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  build-osx:
+    macos:
+      xcode: "9.0"
+    steps:
+      - checkout
+      - run: "hello osx"
+
+  build-linux:
+    machine: true
+    steps:
+      - checkout
+      - run: "hello linux"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      #- build-osx
+      - build-linux
